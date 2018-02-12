@@ -47,6 +47,7 @@ let loadMoreTime = 0;
 let currentLoadMoreTypeId;
 
 class Main extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -118,8 +119,8 @@ class Main extends React.Component {
   };
 
   onPress = (article) => {
-    const { navigate } = this.props.navigation;
-    navigate('Web', { article });
+    const { navigator } = this.props;
+    navigator.push('Web', { article }, {titleItem: { title: article.userName }});
   };
 
   onIconClicked = () => {
@@ -140,6 +141,7 @@ class Main extends React.Component {
       loadMoreTime = Date.parse(new Date()) / 1000;
     }
   };
+
   renderFooter = () => {
     const { read } = this.props;
     return read.isLoadMore ? <Footer /> : <View />;

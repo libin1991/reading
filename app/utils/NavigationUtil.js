@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  */
-import { NavigationActions } from 'react-navigation';
+import { Navigator } from 'react-native-navigation-hybrid';
 
 const reset = (navigation, routeName) => {
   const resetAction = NavigationActions.reset({
@@ -25,6 +25,29 @@ const reset = (navigation, routeName) => {
   navigation.dispatch(resetAction);
 };
 
+function resetRootToCategory() {
+  Navigator.setRoot({
+    stack: {
+      screen: {
+        moduleName: 'Category', 
+        props: {isFirst: true} 
+      }
+    }
+  });
+}
+
+function resetRootToHome() {
+  Navigator.setRoot({
+    tabs: [
+      {stack: {screen: {moduleName: 'Main'}}}, 
+      {stack: {screen: {moduleName: 'Category'}}},
+      {stack: {screen: {moduleName: 'Feedback'}}},
+      {stack: {screen: {moduleName: 'About'}}}
+    ]
+  });
+}
+
 export default {
-  reset
+  resetRootToCategory,
+  resetRootToHome,
 };

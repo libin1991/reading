@@ -21,28 +21,44 @@ import { StyleSheet, Image, Text, Linking, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Button from '../../components/Button';
+import fontUri from '../../utils/FontUtil';
 
 const SHOW_API = 'https://www.showapi.com';
 const READING_REPO = 'https://github.com/attentiveness/reading';
+const ACTION_OPEN_GITHUB = 'open_github';
 
 const aboutLogo = require('../../img/about_logo.png');
 
 class About extends React.Component {
-  static navigationOptions = {
-    title: '关于',
-    tabBarIcon: ({ tintColor }) => (
-      <Icon name="md-information-circle" size={25} color={tintColor} />
-    ),
-    headerRight: (
-      <Icon.Button
-        name="logo-github"
-        backgroundColor="transparent"
-        underlayColor="transparent"
-        activeOpacity={0.8}
-        onPress={() => Linking.openURL(READING_REPO)}
-      />
-    )
+
+  static navigationItem = {
+    titleItem: {
+      title: '关于'
+    },
+
+    rightBarButtonItem: {
+      icon: {uri: fontUri('Ionicons', 'logo-github', 24)},
+      action: ACTION_OPEN_GITHUB,
+    },
+
+    tabItem: {
+      title: '关于',
+      icon: { uri: fontUri('Ionicons', 'md-information-circle', 24)},
+      hideTabBarWhenPush: true,
+    },
+
   };
+
+  componentWillMount() {
+    this.props.navigator.onBarButtonItemClick = this.onBarButtonItemClick.bind(this);
+  }
+
+  onBarButtonItemClick(action) {
+		console.info(action)
+		if(ACTION_OPEN_GITHUB === action) {
+			Linking.openURL(READING_REPO);
+		}
+  }
 
   render() {
     return (

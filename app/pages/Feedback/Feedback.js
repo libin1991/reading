@@ -22,30 +22,50 @@ import AV from 'leancloud-storage';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ToastUtil from '../../utils/ToastUtil';
+import fontUri from '../../utils/FontUtil';
 
 let feedbackText;
 
+const ACTION_HANDLE_CHECK = 'handle_check';
+
 class Feedback extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: '建议',
-    tabBarIcon: ({ tintColor }) => (
-      <Icon name="md-thumbs-up" size={25} color={tintColor} />
-    ),
-    headerRight: (
-      <Icon.Button
-        name="md-checkmark"
-        backgroundColor="transparent"
-        underlayColor="transparent"
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.state.params.handleCheck();
-        }}
-      />
-    )
-  });
+  static navigationItem = {
+
+    titleItem: {
+      title: '建议'
+    },
+
+    rightBarButtonItem: {
+      icon: {uri: fontUri('Ionicons', 'md-checkmark', 24)},
+      action: ACTION_HANDLE_CHECK,
+    },
+
+    tabItem: {
+      title: '建议',
+      icon: { uri: fontUri('Ionicons', 'md-thumbs-up', 24)},
+      hideTabBarWhenPush: true,
+    },
+    
+  };
+
+  constructor(props) {
+    super(props);
+    this.onActionSelected = this.onActionSelected.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.navigator.onBarButtonItemClick = this.onBarButtonItemClick.bind(this);
+  }
+
   componentDidMount() {
     feedbackText = '';
-    this.props.navigation.setParams({ handleCheck: this.onActionSelected });
+  }
+
+  onBarButtonItemClick(action) {
+		console.info(action)
+		if(ACTION_HANDLE_CHECK === action) {
+			this.onActionSelected();
+		}
   }
 
   onActionSelected = () => {

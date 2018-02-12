@@ -23,32 +23,6 @@ import * as categoryCreators from '../actions/category';
 
 import Category from '../pages/Category/Category';
 
-class CategoryContainer extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: '分类',
-    tabBarIcon: ({ tintColor }) => (
-      <Icon name="md-pricetags" size={25} color={tintColor} />
-    ),
-    headerRight:
-      navigation.state.params !== undefined &&
-      navigation.state.params.isFirst ? null : (
-        <Icon.Button
-          name="md-checkmark"
-          backgroundColor="transparent"
-          underlayColor="transparent"
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.state.params.handleCheck();
-          }}
-        />
-        )
-  });
-
-  render() {
-    return <Category {...this.props} />;
-  }
-}
-
 const mapStateToProps = (state) => {
   const { category } = state;
   return {
@@ -63,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

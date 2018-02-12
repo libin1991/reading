@@ -14,7 +14,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "lint": "eslint app --fix",
-    "format": "find app -name '*.js' | xargs prettier --write --single-quote"
+    "format": "find app -name '*.js' | xargs prettier --write --single-quote",
+    "fbv": "node scripts/fix-build-version.js",
+    "postinstall": "npm run fbv"
   },
   "dependencies": {
     "leancloud-storage": "3.5.0",
@@ -31,7 +33,7 @@
     "react-native-splash-screen": "^3.0.6",
     "react-native-vector-icons": "^4.5.0",
     "react-native-wechat": "^1.9.9",
-    "react-navigation": "^1.0.0-beta.26",
+    "react-native-navigation-hybrid": "^0.2.0",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
